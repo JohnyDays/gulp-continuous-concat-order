@@ -1,16 +1,19 @@
 {
-  "name": "gulp-concat",
-  "description": "Concatenates files",
-  "version": "2.1.7",
-  "homepage": "http://github.com/wearefractal/gulp-concat",
-  "repository": "git://github.com/wearefractal/gulp-concat.git",
-  "author": "Fractal <contact@wearefractal.com> (http://wearefractal.com/)",
+  "name": "gulp-continuous-concat",
+  "description": "Continuously concatenates files (makes gulp-watch useful again for concated files)",
+  "version": "0.1.0",
+  "homepage": "http://github.com/davewasmer/gulp-continuous-concat",
+  "repository": "git://github.com/davewasmer/gulp-continuous-concat.git",
+  "author": "Dave Wasmer <davewasmer@gmail.com> (http://davewasmer.com/)",
+  "contributors": [
+    "Fractal <contact@wearefractal.com> (http://wearefractal.com/)"
+  ],
   "main": "./index.js",
   "keywords": [
     "gulpplugin"
   ],
   "dependencies": {
-    "through": "~2.3.4",
+    "lodash": "~2.4.1",
     "gulp-util": "~2.2.5"
   },
   "devDependencies": {
@@ -25,8 +28,8 @@
   },
   "licenses": [
     {
-      "type": "MIT",
-      "url": "http://github.com/wearefractal/gulp-concat/raw/master/LICENSE"
+      "type": "Apache 2.0",
+      "url": "http://github.com/davewasmer/gulp-continuous-concat/raw/master/LICENSE"
     }
   ]
 }
