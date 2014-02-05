@@ -1,31 +1,44 @@
-var through = require('through');
-var os = require('os');
+var Stream = require('stream');
 var path = require('path');
 var gutil = require('gulp-util');
+var _ = require('lodash');
 var PluginError = gutil.PluginError;
 var File = gutil.File;
+
 
 module.exports = function(fileName, opt){
   if (!fileName) throw new PluginError('gulp-concat',  'Missing fileName option for gulp-concat');
   if (!opt) opt = {};
   if (!opt.newLine) opt.newLine = gutil.linefeed;
 
-  var buffer = [];
+  var buffer = {};
   var firstFile = null;
+  var stream = new Stream.Transform({objectMode: true});
 
-  function bufferContents(file){
-    if (file.isNull()) return; // ignore
-    if (file.isStream()) return this.emit('error', new PluginError('gulp-concat',  'Streaming not supported'));
+  stream._transform = function(file, encoding, done) {
+    console.log('file inbound: ', file.path);
+    if (file.isNull()) { return done(); } // ignore
+    if (file.isStream()) { 
+      this.emit('error', new PluginError('gulp-concat',  'Streaming not supported'));
+      return done();
+    }
 
-    if (!firstFile) firstFile = file;
+    if (!firstFile) { firstFile = file; }
 
-    buffer.push(file.contents.toString('utf8'));
+    buffer[file.path] = file.contents.toString('utf8');
+
+    buildFile();
+    done()
   }
 
-  function endStream(){
-    if (buffer.length === 0) return this.emit('end');
+  var buildFile = _.debounce(function() {
+    if (Object.keys(buffer).length === 0) { return; }
 
-    var joinedContents = buffer.join(opt.newLine);
+    var contents = [];
+    for (filepath in buffer) {
+      contents.push(buffer[filepath]);
+    }
+    var joinedContents = contents.join(opt.newLine);
 
     var joinedPath = path.join(firstFile.base, fileName);
 
@@ -36,9 +49,8 @@ module.exports = function(fileName, opt){
       contents: new Buffer(joinedContents)
     });
 
-    this.emit('data', joinedFile);
-    this.emit('end');
-  }
+    stream.push(joinedFile);
+  }, opt.debounce || 100);
 
-  return through(bufferContents, endStream);
+  return stream;
 };
