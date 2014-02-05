@@ -1,7 +1,7 @@
 {
   "name": "gulp-continuous-concat",
   "description": "Continuously concatenates files (makes gulp-watch useful again for concated files)",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "http://github.com/davewasmer/gulp-continuous-concat",
   "repository": "git://github.com/davewasmer/gulp-continuous-concat.git",
   "author": "Dave Wasmer <davewasmer@gmail.com> (http://davewasmer.com/)",
