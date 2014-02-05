@@ -31,7 +31,6 @@ module.exports = function(fileName, opt){
   var stream = new Stream.Transform({objectMode: true});
 
   stream._transform = function(file, encoding, done) {
-    console.log('file inbound: ', file.path);
     if (file.isNull()) { return done(); } // ignore
     if (file.isStream()) { 
       this.emit('error', new PluginError('gulp-concat',  'Streaming not supported'));
