@@ -57,6 +57,12 @@ gulp.task('scripts', function() {
 });
 ```
 
+## Limitations
+
+Because `gulp-watch` [does not emit files that were deleted](https://github.com/floatdrop/gulp-watch/issues/5), if you add a continuous concat step after a `gulp-watch`, and then delete a file, it will not be removed from the concatentated result.
+
+If and when `gulp-watch` adds this functionality, this plugin could be updated to remove deleted files from the result.
+
 ## LICENSE
 
 Apache 2.0 (See LICENSE file for full details)
