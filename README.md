@@ -44,7 +44,7 @@ gulp.task('scripts', function() {
 
 `gulp-continuous-concat` gets around this by rebuilding the destination file on every incoming file. To avoid excessive rebuilding (for example, when first running the command on several files), it debounces the build step so it will only run after 100ms of not being called (the debouncing period is configurable via the `debounce` option on the options hash).
 
-Files will be concatenated in the order that they are supplied, and will maintain that order even if one of those files is later re-emitted from upstream. For example, to concat `./lib/file3.js`, `./lib/file1.js` and `./lib/file2.js` in that order, the following code would create a task to do that:
+Files will be concatenated in the order that they are supplied, or in the order you define as an option and will maintain that order even if one of those files is later re-emitted from upstream. For example, to concat `./lib/file3.js`, `./lib/file1.js` and `./lib/file2.js` in that order, the following code would create a task to do that:
 
 ```javascript
 var concat = require('gulp-continuous-concat');
@@ -52,10 +52,11 @@ var concat = require('gulp-continuous-concat');
 gulp.task('scripts', function() {
   gulp.src(['./lib/file3.js', './lib/file1.js', './lib/file2.js'])  // <-- emits the files in order
     .pipe(watch())                                                  // <-- later, ./lib/file1.js changes and re-emitted from here
-    .pipe(concat('all.js'))                                         // <-- continuous-concat maintains the original gulp.src order
+    .pipe(concat('all.js', {order:['**/file1.js','**/file2.js']})) // ['/home/file1.js', '/home/file2.js', '/home/otherFile.js'] 
     .pipe(gulp.dest('./dist/'))
 });
 ```
+
 
 ## Limitations
 
