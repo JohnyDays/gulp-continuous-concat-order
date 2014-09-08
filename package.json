@@ -14,7 +14,8 @@
   ],
   "dependencies": {
     "lodash": "~2.4.1",
-    "gulp-util": "~2.2.5"
+    "gulp-util": "~2.2.5",
+    "minimatch": "~1.0.0"
   },
   "devDependencies": {
     "mocha": "*",

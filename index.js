@@ -19,11 +19,11 @@ var gutil = require('gulp-util');
 var _ = require('lodash');
 var PluginError = gutil.PluginError;
 var File = gutil.File;
-
+var order = require('./order');
 
 module.exports = function(fileName, opt){
   if (!fileName) throw new PluginError('gulp-concat',  'Missing fileName option for gulp-concat');
-  if (!opt) opt = {};
+  if (!opt)         opt = {};
   if (!opt.newLine) opt.newLine = gutil.linefeed;
 
   var buffer = {};
@@ -49,7 +49,8 @@ module.exports = function(fileName, opt){
     if (Object.keys(buffer).length === 0) { return; }
 
     var contents = [];
-    for (filepath in buffer) {
+    var ordered_buffer = order(buffer, opt);
+    for (filepath in ordered_buffer) {
       contents.push(buffer[filepath]);
     }
     var joinedContents = contents.join(opt.newLine);
@@ -68,3 +69,4 @@ module.exports = function(fileName, opt){
 
   return stream;
 };
+
