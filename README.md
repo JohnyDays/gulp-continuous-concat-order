@@ -50,9 +50,9 @@ Files will be concatenated in the order that they are supplied, or in the order 
 var concat = require('gulp-continuous-concat');
 
 gulp.task('scripts', function() {
-  gulp.src(['./lib/file3.js', './lib/file1.js', './lib/file2.js'])  // <-- emits the files in order
+  gulp.src(['./lib/file1.js', './lib/file2.js', './lib/file3.js'])  // <-- emits the files in order
     .pipe(watch())                                                  // <-- later, ./lib/file1.js changes and re-emitted from here
-    .pipe(concat('all.js', {order:['**/file1.js','**/file2.js']})) // ['/home/file1.js', '/home/file2.js', '/home/otherFile.js'] 
+    .pipe(concat('all.js', {order:['**/file1.js','**/file2.js', '**/file3.js']})) // ['./lib/file1.js', './lib/file2.js', './lib/file3.js'] 
     .pipe(gulp.dest('./dist/'))
 });
 ```
