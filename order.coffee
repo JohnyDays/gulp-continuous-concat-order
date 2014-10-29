@@ -20,14 +20,7 @@ module.exports = (buffer,opts)->
     
   ranked_array = for filename,value of rank_object when rank_object.hasOwnProperty(filename)
     filename:filename, rank:value.rank, contents:value.contents 
-  sorted_array = ranked_array.sort (a,b)->
-
-    if a.rank > b.rank
-      1
-    else if b.rank < a.rank
-     -1
-    else
-      0
+  sorted_array = ranked_array.sort (a,b)-> a.rank-b.rank
 
   sorted_buffer = {}
   sorted_buffer[item.filename] = item.contents for item in sorted_array
