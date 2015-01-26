@@ -71,7 +71,7 @@ describe('gulp-concat', function() {
     });
 
     it('should order through a glob pattern array', function(done){
-      var stream = concat("test.js", {newLine: '\r\n', order:['**/file2.js', '**/file.js']});
+      var stream = concat("test.js", {newLine: '\r\n', order:['**/file2.js','unmatched_files', '**/file.js']});
       stream.on('data', function(newFile){
         should.exist(newFile);
         should.exist(newFile.path);
